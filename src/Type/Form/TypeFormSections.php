@@ -27,14 +27,13 @@ class TypeFormSections
                                 'name',
                                 'slug',
                                 'description',
-                                'handler',
+                                'layout',
                             ],
                         ],
-                        'layout'  => [
-                            'title'  => 'anomaly.module.pages::tab.layout',
+                        'advanced' => [
+                            'title'  => 'Advanced',
                             'fields' => [
-                                'theme_layout',
-                                'layout',
+                                'handler',
                             ],
                         ],
                     ],

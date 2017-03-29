@@ -38,8 +38,11 @@ class PageResponse
     public function make(PageInterface $page)
     {
         if (!$page->getResponse()) {
+            $type = $page->getType();
+            $layout = $type->getFieldType('layout');
+
             $page->setResponse(
-                $this->response->view('anomaly.module.pages::page', ['page' => $page, 'content' => $page->getContent()])
+                $this->response->view($layout->getValue(), ['page' => $page])
             );
         }
     }
