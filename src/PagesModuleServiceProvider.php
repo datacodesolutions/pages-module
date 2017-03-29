@@ -98,7 +98,6 @@ class PagesModuleServiceProvider extends AddonServiceProvider
 
         /* @var PageInterface $page */
         foreach ($pages as $page) {
-
             $extension = $page->getHandler();
 
             $extension->route($page);
