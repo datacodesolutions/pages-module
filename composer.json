@@ -1,5 +1,5 @@
 {
-    "name": "anomaly/pages-module",
+    "name": "datacode/pages-module",
     "type": "streams-addon",
     "description": "A powerful module for the Streams Platform that lets you create pages, generate navigation, manage content, and build websites faster than ever.",
     "keywords": [
