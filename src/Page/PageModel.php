@@ -94,10 +94,6 @@ class PageModel extends PagesPagesEntryModel implements PageInterface
      */
     public function make()
     {
-        $handler = $this->getHandler();
-
-        $handler->make($this);
-
         return $this;
     }
 
@@ -276,28 +272,6 @@ class PageModel extends PagesPagesEntryModel implements PageInterface
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Get the page handler.
-     *
-     * @return PageHandlerInterface
-     */
-    public function getHandler()
-    {
-        $type = $this->getType();
-
-        return $type->getHandler();
-    }
-
-    /**
-     * Get the theme layout.
-     *
-     * @return string
-     */
-    public function getThemeLayout()
-    {
-        return $this->theme_layout;
     }
 
     /**

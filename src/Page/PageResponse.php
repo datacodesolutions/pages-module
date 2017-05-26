@@ -38,11 +38,13 @@ class PageResponse
     public function make(PageInterface $page)
     {
         if (!$page->getResponse()) {
-            $type = $page->getType();
-            $layout = $type->getFieldType('layout');
+            if (!$layout = $page->layout_override) {
+                $type = $page->getType();
+                $layout = $type->getFieldType('layout')->getValue();
+            }
 
             $page->setResponse(
-                $this->response->view($layout->getValue(), ['page' => $page])
+                $this->response->view($layout, ['page' => $page])
             );
         }
     }

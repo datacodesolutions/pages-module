@@ -45,9 +45,16 @@ class PageEntryFormSections
                                 'page_enabled',
                                 'page_home',
                                 'page_visible',
-                                'page_exact',
                                 'page_allowed_roles',
-                                'page_theme_layout',
+                            ],
+                        ],
+                        'advanced' => [
+                            'title'  => 'Advanced',
+                            'fields' => [
+                                'page_exact',
+                                'page_layout_override',
+                                'page_pre_page_handler',
+                                'page_page_handler',
                             ],
                         ],
                     ],

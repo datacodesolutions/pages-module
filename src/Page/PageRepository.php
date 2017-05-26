@@ -74,6 +74,14 @@ class PageRepository extends EntryRepository implements PageRepositoryInterface
      */
     public function findByPath($path)
     {
-        return $this->model->where('path', $path)->first();
+        return $this->model
+            ->where('path', $path)
+            ->whereNested(function($query) use($path) {
+                $query
+                    ->where('path', 'LIKE', $path . '%')
+                    ->where('exact', '=', 0);
+            }, 'or')
+            ->orderBy('exact', 'DESC')
+            ->first();
     }
 }

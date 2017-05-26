@@ -1,10 +1,12 @@
 <?php namespace Anomaly\PagesModule\Http\Controller;
 
+use Anomaly\PagesModule\Command\MakePage;
 use Anomaly\PagesModule\Page\Contract\PageInterface;
 use Anomaly\PagesModule\Page\Contract\PageRepositoryInterface;
 use Anomaly\PagesModule\Page\PageResolver;
 use Anomaly\Streams\Platform\Http\Controller\PublicController;
 use Anomaly\Streams\Platform\View\ViewTemplate;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Routing\Route;
 
@@ -34,12 +36,17 @@ class PagesController extends PublicController
         $page->setCurrent(true);
         $page->setActive(true);
 
-        $type    = $page->getType();
-        $handler = $type->getHandler();
-
         $template->set('page', $page);
 
-        $handler->make($page);
+        if ($page->pre_page_handler) {
+            $response = app()->call($page->pre_page_handler, [$page, $template]);
+
+            if ($response instanceof Response ) {
+                return $response;
+            }
+        }
+
+        $this->dispatch(new MakePage($page));
 
         return $page->getResponse();
     }
@@ -60,12 +67,9 @@ class PagesController extends PublicController
 
         $page->setAttribute('enabled', true);
 
-        $type    = $page->getType();
-        $handler = $type->getHandler();
-
         $template->set('page', $page);
 
-        $handler->make($page);
+        $this->dispatch(new MakePage($page));
 
         return $page->getResponse();
     }

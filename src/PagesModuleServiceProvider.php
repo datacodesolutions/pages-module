@@ -12,6 +12,7 @@ use Anomaly\Streams\Platform\Addon\AddonServiceProvider;
 use Anomaly\Streams\Platform\Model\Pages\PagesPagesEntryModel;
 use Anomaly\Streams\Platform\Model\Pages\PagesTypesEntryModel;
 use Illuminate\Http\Request;
+use Route;
 
 /**
  * Class PagesModuleServiceProvider
@@ -93,14 +94,33 @@ class PagesModuleServiceProvider extends AddonServiceProvider
             return;
         }
 
-        /* @var PageCollection $pages */
-        $pages = $pages->sorted();
+        $page = $pages->findByPath($request->path() == '/' ? '/' : '/' . $request->path());
 
-        /* @var PageInterface $page */
-        foreach ($pages as $page) {
-            $extension = $page->getHandler();
+        if ($page) {
+            if ($page->isExact()) {
+                Route::any(
+                    $page->getPath() . '/{any?}',
+                    [
+                        'uses'                       => 'Anomaly\PagesModule\Http\Controller\PagesController@view',
+                        'streams::addon'             => 'anomaly.module.pages',
+                        'anomaly.module.pages::page' => $page->getId(),
+                        'where'                      => [
+                            'any' => '(.*)',
+                        ],
+                    ]
+                );
 
-            $extension->route($page);
+                return;
+            }
+
+            Route::any(
+                $page->getPath(),
+                [
+                    'uses'                       => 'Anomaly\PagesModule\Http\Controller\PagesController@view',
+                    'streams::addon'             => 'anomaly.module.pages',
+                    'anomaly.module.pages::page' => $page->getId(),
+                ]
+            );
         }
     }
 }

@@ -84,7 +84,6 @@ class TypeSeeder extends Seeder
                         'description' => 'A simple page type.',
                     ],
                     'slug'         => 'default',
-                    'handler'      => 'anomaly.extension.default_page_handler',
                     'theme_layout' => 'theme::layouts/default.twig',
                     'layout'       => '<h1>{{ page.title }}</h1>
 

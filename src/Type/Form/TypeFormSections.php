@@ -33,7 +33,8 @@ class TypeFormSections
                         'advanced' => [
                             'title'  => 'Advanced',
                             'fields' => [
-                                'handler',
+                                'pre_page_handler',
+                                'page_handler',
                             ],
                         ],
                     ],
