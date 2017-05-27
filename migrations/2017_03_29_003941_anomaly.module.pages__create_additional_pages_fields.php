@@ -1,6 +1,7 @@
 <?php
 
 use Anomaly\Streams\Platform\Database\Migration\Migration;
+use Artisan;
 
 class AnomalyModulePagesCreateAdditionalPagesFields extends Migration
 {
@@ -48,6 +49,8 @@ class AnomalyModulePagesCreateAdditionalPagesFields extends Migration
                     'instructions' => 'Path to Twig Template',
                 ]
             );
+
+        Artisan::call('cache:clear');
     }
 
     /**
